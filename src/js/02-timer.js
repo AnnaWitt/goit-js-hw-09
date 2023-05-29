@@ -17,9 +17,8 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     const selectedDate = selectedDates[0];
-    const currentDate = new Date();
-
-    if (selectedDate < currentDate) {
+   
+    if (selectedDate < new Date()) {
       window.alert("Please choose a date in the future");
       btnStart.disabled = true;
     }
@@ -32,7 +31,7 @@ const options = {
 flatpickr(inputDateTimePicker, options);
 
 function countDown() {
-  const selectedDate = flatpickr(inputDateTimePicker).selectedDates[0];
+  const selectedDate = new Date(inputDateTimePicker.value);
   const currentDate = new Date();
   const diff = selectedDate - currentDate;
   if (diff < 0) {
