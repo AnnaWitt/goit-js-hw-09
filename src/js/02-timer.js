@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
 
 const inputDateTimePicker = document.getElementById('datetime-picker');
 const btnStart = document.querySelector('button[data-start]');
@@ -19,7 +20,7 @@ const options = {
     const selectedDate = selectedDates[0];
    
     if (selectedDate < new Date()) {
-      window.alert("Please choose a date in the future");
+      Notiflix.Notify.warning('Please choose a date in the future');
       btnStart.disabled = true;
     }
     else {
@@ -38,11 +39,11 @@ function countDown() {
     clearInterval(intervalId);
     return;
   }
-  const { days, hours, minutes, seconds } = convertMs(diff);
-  daysValue.textContent = days;
-  hoursValue.textContent = hours;
-  minutesValue.textContent = minutes;
-  secondsValue.textContent = seconds;
+ const { days, hours, minutes, seconds } = convertMs(diff);
+ daysValue.textContent = days;
+ hoursValue.textContent = addLeadingZero(hours);
+ minutesValue.textContent = addLeadingZero(minutes);
+ secondsValue.textContent = addLeadingZero(seconds);
 }
 
 let intervalId = null;
@@ -75,3 +76,11 @@ console.log(convertMs(2000));// {days: 0, hours: 0, minutes: 0, seconds: 2}
 console.log(convertMs(140000));// {days: 0, hours: 0, minutes: 2, seconds: 20}
 console.log(convertMs(24140000));// {days: 0, hours: 6 minutes: 42, seconds: 20}
 
+function addLeadingZero(number) {
+  if (number < 10) {
+    const numberWithZero = number.toString().padStart(2, '0');
+    return numberWithZero;
+  } else {
+    return number;
+  }
+}
